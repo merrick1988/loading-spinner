@@ -14,12 +14,13 @@ You can now start using the ng-spinner directive to display an animated spinner.
 
 For example :
 
-'
+```
 <div gt-spinner if="loading" overlay-light="true" white="true" centered="true"></div>
-'
+```
 
 also with inline text
-'
+
+```
 <span gt-spinner if="loading" inline="true" inline-text="Loading..."></span>
-'
+```
 
