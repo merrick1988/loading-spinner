@@ -14,7 +14,9 @@ You can now start using the ng-spinner directive to display an animated spinner.
 
 For example :
 
+<code>
 <div gt-spinner if="loading" overlay-light="true" white="true" centered="true"></div>
+</code>
 
 also with inline text
 
