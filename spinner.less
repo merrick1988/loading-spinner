@@ -1,0 +1,138 @@
+/* -----------------------*/
+/*    Loading Spinner     */
+/* -----------------------*/
+
+/*  Dimensions  */
+
+@spinner-animation-duration: 0.67s;
+@spinner-bar-background: @color-black-light;
+@spinner-bar-count: 12;
+@spinner-bar-height: 6px;
+@spinner-bar-translate: translate(0, -(@spinner-size - @spinner-bar-height) / 2);
+@spinner-bar-white-background: @color-white;
+@spinner-bar-width: 2px;
+@spinner-size: 28px;
+
+/*
+  Example of using:
+    <div class="loading-spinner (loading-spinner_centered, loading-spinner_with-overlay, loading-spinner_white">
+      <div class="ls-bar ls-bar_1"></div>
+      <div class="ls-bar ls-bar_2"></div>
+      <div class="ls-bar ls-bar_3"></div>
+      <div class="ls-bar ls-bar_4"></div>
+      <div class="ls-bar ls-bar_5"></div>
+      <div class="ls-bar ls-bar_6"></div>
+      <div class="ls-bar ls-bar_7"></div>
+      <div class="ls-bar ls-bar_8"></div>
+      <div class="ls-bar ls-bar_9"></div>
+      <div class="ls-bar ls-bar_10"></div>
+      <div class="ls-bar ls-bar_11"></div>
+      <div class="ls-bar ls-bar_12"></div>
+    </div>
+*/
+
+.loading-spinner {
+  display: inline-block;
+  min-height: @spinner-size;
+  min-width: @spinner-size;
+  position: relative;
+  .ls-bar {
+    -webkit-animation: ls-bar-fade @spinner-animation-duration linear infinite;
+    animation: ls-bar-fade @spinner-animation-duration linear infinite;
+    background: @spinner-bar-background;
+    height: @spinner-bar-height;
+    left: 50%;
+    margin-left: -@spinner-bar-width / 2;
+    margin-top: -@spinner-bar-height / 2;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    width: @spinner-bar-width;
+  }
+  .generate-bars(12);
+}
+
+.loading-spinner--white {
+  color: @spinner-bar-white-background;
+  font-family: @font-family-light;
+  .ls-bar{
+    background: @spinner-bar-white-background;
+  }
+}
+
+.loading-spinner--centered {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.loading-spinner--overlay {
+  .loading-spinner--centered;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.loading-spinner--overlay-light {
+  .loading-spinner--centered;
+  background: rgba(128, 128, 128, 0.3);
+}
+
+.loading-spinner--inline {
+  .ls-bar {
+    left: @spinner-bar-height * 2;
+  }
+  padding-left: 40px;
+  font-size: 1.2em;
+  line-height: 28px;
+  margin-top:20px;
+}
+
+.generate-bars(@spinner-bar-count, @i: 1) when (@i =< @spinner-bar-count) {
+  .ls-bar_@{i} {
+    -webkit-animation-delay: -@spinner-animation-duration * (1 + @spinner-bar-count - @i) / @spinner-bar-count;
+    animation-delay: -@spinner-animation-duration * (1 + @spinner-bar-count - @i) /@spinner-bar-count;
+    -ms-transform: rotate((@i - 1) * 360deg / @spinner-bar-count) @spinner-bar-translate;
+    -webkit-transform: rotate((@i - 1) * 360deg / @spinner-bar-count) @spinner-bar-translate;
+    transform: rotate((@i - 1) * 360deg / @spinner-bar-count) @spinner-bar-translate;
+  }
+  .generate-bars(@spinner-bar-count, (@i + 1));
+}
+
+/*  animation  */
+@-webkit-keyframes ls-bar-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ls-bar-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/*  IE support  */
+.ie .loading-spinner {
+  background: url("../images/spinner_black.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+
+}
+
+.ie .loading-spinner_white {
+  background: url("../images/spinner_white.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.ie .loading-spinner .ls-bar {
+  display: none;
+}
